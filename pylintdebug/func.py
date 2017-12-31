@@ -63,4 +63,5 @@ def func_info(func=None, **options):
 def print_callsite_location():
     """Print location of function call of the parent of the call location."""
     fi = inspect.getouterframes( inspect.currentframe() )[2]
-    print("+%s %s %s" % (fi.lineno, fi.filename, fi.function))
+    print("{path}:{line} {fname}".format(
+        line=fi.lineno, path=fi.filename, fname=fi.function))
