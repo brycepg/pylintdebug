@@ -23,6 +23,7 @@ try:
 except ImportError:
     HAS_ASTROID = False
 
+COUNT = 0
 def func_info(func=None, **options):
     """Decorator to retrieve function info
 
@@ -36,22 +37,25 @@ def func_info(func=None, **options):
             return func_info(func, **options)
         return partial_infer
     def inner(*args, **kwargs):
+        global COUNT
         convert_generators = options.get("listify", False)
-        print("Calling", func.__qualname__)
-        for arg in args:
-            if HAS_ASTROID and isinstance(arg, NodeNG):
-                if "\n" not in arg.as_string() and len(arg.as_string()) < 80:
-                    print("Node: ", arg.as_string())
-                else:
-                    print("Node: ", arg)
+        print(f"Calling ({COUNT})", func.__qualname__)
+        COUNT += 1
         if args:
             print("Args:", args)
         if kwargs:
             print("kwargs:", kwargs)
-        result = func(*args, **kwargs)
-        if isinstance(result, abc.Generator) and convert_generators:
-            result = list(result)
-        print("result", result)
+        try:
+            result = func(*args, **kwargs)
+            if isinstance(result, abc.Generator) and convert_generators:
+                result = list(result)
+        except Exception as exc:
+            COUNT -= 1
+            print(f"exception {type(exc).__name__} ({COUNT})")
+            raise
+        else:
+            COUNT -= 1
+            print(f"result ({COUNT})", result)
         print("-------")
         print()
         if convert_generators:
