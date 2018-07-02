@@ -10,7 +10,7 @@ def get_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('path')
     parser.add_argument('--messages-location', action='store_true', default=False, help="Get location of add_message in pylint source tree")
-    parser.add_argument('--pylint-messages', action='store_true', help='enable all pylint messages', default=False)
+    parser.add_argument('--no-pylint-messages', action='store_false', help='disable all pylint messages', default=True, dest="pylint_messages")
     parser.add_argument('--inference', action='store_true', help='Print info about inference engine', default=False)
     return parser
 
