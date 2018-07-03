@@ -3,6 +3,7 @@ from types import FunctionType, MethodType
 
 import astroid
 from astroid import inference
+from astroid.brain.brain_builtin_inference import register_builtin_transform
 import pylint
 
 from .func import func_info
@@ -122,5 +123,4 @@ def _is_keyword_true(keyword):
     return next(keyword.value.infer()).as_string() == "True"
 
 
-from astroid.brain.brain_builtin_inference import register_builtin_transform
 register_builtin_transform(reveal_inference, 'reveal_inference')
