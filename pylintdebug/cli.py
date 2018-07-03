@@ -13,7 +13,7 @@ def get_parser():
     parser.add_argument('--messages-location', action='store_true', default=False, help="Get location of add_message in pylint source tree")
     parser.add_argument('--no-pylint-messages', action='store_false', help='disable all pylint messages', default=True, dest="pylint_messages")
     parser.add_argument('--inference', action='store_true', help='Print info about inference engine', default=False)
-    parser.add_argument('--extend-args', help="Extend pylint args", default=[], dest="extended_args")
+    parser.add_argument('--extend-args', help="Extend pylint args", default="", dest="extended_args")
     return parser
 
 def main():
